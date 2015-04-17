@@ -225,12 +225,16 @@ app.boot "/write/write.html", ->
   # AA を挿入セレクトボックス
 
   app.AA.getList().done (data) ->
+    for item in data
+      cu = $(".message").val()
+      $(".message").val(cu + item.title)
+    
     $("#aa_selectbox").find("option").remove()
-    $op = $("<option>AAを挿入</option>").val("")
+    $op = $("<option>").html("AAを挿入").val("")
     $("#aa_selectbox").append($op)
 
     for item in data
-      $op = $("<option>#{item.title}</option>").val(item.id)
+      $op = $("<option>").html(item.title).val(item.id)
       $("#aa_selectbox").append($op)
 
   $("#aa_selectbox").change () ->
