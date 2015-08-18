@@ -65,6 +65,7 @@ task :pack do
       end
     end
     mv "#{tmpdir}/debug.crx", "read.crx_2.#{MANIFEST["version"]}.crx"
+    sh "echo UsedPassPath: \"#{pem_path}\""
   end
 end
 
