@@ -174,6 +174,23 @@ app.sync2ch.apply_data = ($xml) ->
   </sync2ch_response>
   ###
   ###
+  <?xml version="1.0" encoding="utf-8"?>
+  <sync2ch_response result="ok" account_type="無料アカウント" remain="25" sync_number="56" client_id="38974">
+  <entities>
+    <th id="0" url="http://hello.2ch.net/test/read.cgi/photo/1440276417/" title="コミケ等で撮ったコスプレ写真うpスレ part609 [転載禁止]©2ch.net " s="a" read="1" now="1" count="1"/>
+    <th id="1" url="http://jbbs.shitaraba.net/bbs/read.cgi/computer/42710/1290070123/" title="read.crx CSSスレ" s="a" read="1" now="1" count="1"/>
+    <th id="2" url="http://hello.2ch.net/test/read.cgi/wm/1439908803/" title="iPod touch Part275 [転載禁止]©2ch.net " s="a" read="1" now="1" count="1"/>
+  </entities>
+  <thread_group category="history" s="u">
+  </thread_group>
+  <thread_group category="open" s="u">
+    <th id="0"/>
+    <th id="1"/>
+    <th id="2"/>
+  </thread_group>
+  </sync2ch_response>
+  ###
+  ###
   TODO: データ適応処理
   他のも対応する
   ###
@@ -255,37 +272,17 @@ app.sync2ch.apply_open = ($xml, $entities) ->
         id = $open_tabs.eq(i).attr("id")
         $tab = $entities.find("[id=\"#{id}\"]")
         if $tab.attr("s") isnt "n"
-          tab_url = $tab.attr("url")
-          tab_title = $tab.attr("title")
-          if layout = 2
-            tab_selected = (i is 1)
-          else
-            if $tab.prop("tagName") is "th" and th_select is false
-              th_select = true
-              tab_selected = true
-            else if $tab.prop("tagName") is "bd" and bd_select is false
-              bd_select = true
-              tab_selected = true
-            else
-              tab_selected = false
-          data.push({
-            url: tab_url,
-            title: tab_title,
-            selected: tab_selected
+          is_restored = true
+          console.group()
+          # タブを置き換え
+          console.log tab
+          app.message.send("open", {
+            url: $tab.attr("url")
+            title: $tab.attr("title")
+            lazy: true
+            new_tab: true
           })
-      # タブを置き換え
-      console.log tabs
-      console.group()
-      for tab in data
-        console.log tab
-        is_restored = true
-        app.message.send("open", {
-          url: tab.url
-          title: tab.title
-          lazy: not tab.selected
-          new_tab: true
-        })
-      console.groupEnd()
+          console.groupEnd()
   d.resolve()
   return d.promise()
 

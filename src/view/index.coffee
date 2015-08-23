@@ -735,12 +735,13 @@ app.main = ->
         $iframe.trigger("request_focus", message)
     return
 
+  #データ保存等の後片付けを行なってくれるzombie.html起動
   $(window)
-    #データ保存等の後片付けを行なってくれるzombie.html起動
     .bind "unload", ->
+      alert()
       cfg_sync_id = app.config.get("sync_id") || ""
       cfg_sync_pass = app.config.get("sync_pass") || ""
-      if localStorage.zombie_read_state? or cfg_sync_id isnt "" or cfg_sync_pass isnt ""
+      if localStorage.zombie_read_state? or (cfg_sync_id isnt "" and cfg_sync_pass isnt "")
         open("/zombie.html", undefined, "left=1,top=1,width=250,height=50")
       return
 

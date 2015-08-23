@@ -12,6 +12,7 @@ do ->
       "read_state"
       "url"
       "util"
+      "Sync2ch"
     ]
 
     for module in modules
