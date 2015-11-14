@@ -267,6 +267,7 @@ module app {
       sync_id: "",
       sync_pass: "",
       sync_device: "",
+      no_history: "off",
       user_css: "",
       bbsmenu: "http://kita.jikkyo.org/cbm/cbm.cgi/20.p0.m0.jb.vs.op.sc.nb.bb/-all/bbsmenu.html",
       format_2chnet: "html"
