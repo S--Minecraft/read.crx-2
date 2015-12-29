@@ -45,7 +45,7 @@ task :pack do
     cp_r "debug", "#{tmpdir}/debug"
     rm_r "#{tmpdir}/debug/test"
 
-    if defined?(ENV["read.crx-2-pem-path"])
+    if ENV["read.crx-2-pem-path"]
       pem_path = ENV["read.crx-2-pem-path"]
     else
       puts "秘密鍵のパスを入力して下さい"
@@ -61,7 +61,7 @@ task :pack do
       if pem_path == " "
         sh "#{ENV["CHROME_LOCATION"]} --pack-extension=\"#{tmpdir}/debug\""
       else
-        sh "#{ENV["CHROME_LOCATION"]} --pack-extension=\"#{tmpdir}/debug\" --pack-extension-key=\"#{pem_path}\""
+        sh "#{ENV["CHROME_LOCATION"]} --pack-extension=\"#{tmpdir}/debug\" --pack-extension-key=#{pem_path}"
       end
     end
     mv "#{tmpdir}/debug.crx", "read.crx_2.#{MANIFEST["version"]}.crx"
@@ -363,7 +363,7 @@ namespace :test do
   task :run, :filter do |t, args|
     require "cgi"
 
-    if defined?(ENV["read.crx-2-id"])
+    if ENV["read.crx-2-id"]
       url = "chrome-extension://#{ENV["read.crx-2-id"]}/test/test.html"
     else
       url = "chrome-extension://#{debug_id}/test/test.html"
@@ -373,14 +373,16 @@ namespace :test do
       tmp = CGI.escape(args[:filter]).gsub("\+", "%20")
       url += "?filter=#{tmp}&spec=#{tmp}"
     end
-    if RUBY_PLATFORM.include?("darwin")
-      # sh "\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" '#{url}'"
-    elsif RUBY_PLATFORM.include?("linux")
-      sh "google-chrome '#{url}'"
-    else
-      # Windowsの場合、Chromeの場所を環境変数から取得する(設定必)
-      sh "#{ENV["CHROME_LOCATION"]} #{url}"
-    end
+
+    # if RUBY_PLATFORM.include?("darwin")
+    #    sh "\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" '#{url}'"
+    # elsif RUBY_PLATFORM.include?("linux")
+    #   sh "google-chrome '#{url}'"
+    # else
+    #   # Windowsの場合、Chromeの場所を環境変数から取得する(設定必)
+    #   sh "#{ENV["CHROME_LOCATION"]} #{url}"
+    # end
+
   end
 
   directory "debug/test"
