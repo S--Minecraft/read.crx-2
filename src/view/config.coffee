@@ -45,13 +45,13 @@ app.boot "/view/config.html", ["cache", "bbsmenu"], (Cache, BBSMenu) ->
     .find("input.direct[type=\"password\"]")
       .each ->
         if app.config.get(this.name)? and app.config.get(this.name) isnt ""
-          `eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('1.7=2.3(2.3(5.6.b(1.4)).9(0,-2.a(1.4).8));',12,12,'|this|Base64|decode|name|app|config|value|length|slice|encode|get'.split('|'),0,{}))`
+          `eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('1.6=2(2(4.5.a(1.3)).8(0,-9(1.3).7));',11,11,'|this|btoa|name|app|config|value|length|slice|atob|get'.split('|'),0,{}))`
         else
           this.value = ""
         null
       .bind "input", ->
         if this.value isnt ""
-          `eval(function(p,a,c,k,e,r){e=String;if(!''.replace(/^/,String)){while(c--)r[c]=k[c]||c;k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('4 2=0.1(0.1(3.2)+0.1(3.5));',6,6,'Base64|encode|value|this|var|name'.split('|'),0,{}))`
+          `eval(function(p,a,c,k,e,r){e=String;if(!''.replace(/^/,String)){while(c--)r[c]=k[c]||c;k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('3 1=0(0(2.1)+0(2.4));',5,5,'btoa|value|this|var|name'.split('|'),0,{}))`
         else
           value = ""
         app.config.set(this.name, value)

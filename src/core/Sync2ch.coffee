@@ -73,7 +73,7 @@ app.sync2ch.open = (xml, notify_error) ->
   if !remain? or remain isnt "0" or remainDate is "" or nowDate > remainDate
     console.log "do-"
     #ここのsync_passのコードに関してはS(https://github.com/S--Minecraft)まで
-    `var sync_pass = eval(function(p,a,c,k,e,r){e=String;if(!''.replace(/^/,String)){while(c--)r[c]=k[c]||c;k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('1.2(1.2(4.5.6("3")).7(0,-1.8("3").9));',10,10,'|Base64|decode|sync_pass|app|config|get|slice|encode|length'.split('|'),0,{}))`
+    `var sync_pass = eval(function(p,a,c,k,e,r){e=String;if(!''.replace(/^/,String)){while(c--)r[c]=k[c]||c;k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('3 1=0(0(2.1)+0(2.4));',5,5,'btoa|value|this|var|name'.split('|'),0,{}))`
     os = app.util.os_detect()
     cfg_sync_id = app.config.get("sync_id")
     sync_client_id = app.config.get("sync_client_id") || ""
