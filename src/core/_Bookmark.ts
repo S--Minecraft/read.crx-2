@@ -66,28 +66,6 @@ export default class Bookmark {
     return this.bel.getAllBoards();
   }
 
-  async add (url:string, title:string, resCount?:number): Promise<boolean> {
-    var entry = BrowserBookmarkEntryList.URLToEntry(url)!;
-
-    entry.title = title;
-
-    var readState = await getReadState(entry.url)
-    if (readState) {
-      entry.readState = readState;
-    }
-
-    if (
-      typeof resCount === "number" &&
-      (!entry.resCount || entry.resCount < resCount)
-    ) {
-      entry.resCount = resCount;
-    } else if (entry.readState) {
-      entry.resCount = entry.readState.received;
-    }
-
-    return this.bel.add(entry);
-  }
-
   async remove (url:string):Promise<boolean> {
     return this.bel.remove(url);
   }
