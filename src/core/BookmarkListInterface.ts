@@ -1,3 +1,4 @@
+import {threadToBoard, fix as fixUrl} from "./URL";
 
 export interface ReadState {
   url: string;
@@ -12,6 +13,7 @@ export interface Entry {
   title: string;
   type: string;
   bbsType: string;
+  boardUrl: string;
   resCount: number|null;
   readState: ReadState|null;
   expired: boolean;
@@ -60,22 +62,25 @@ export const entryToNode = (entry: Entry): string => {
 
 export const nodeToEntry = ({url: string, title?: string}): Entry|null => {
   const fixedURL = fixUrl(url);
-  const {type, bbsType}:GuessResult = guessType(fixedURL);
-  const arg = parseHashQuery(url);
+  const {type, bbsType}: GuessResult = guessType(fixedURL);
 
   if (type === "unknown") return null;
+
+  const arg = parseHashQuery(url);
+  const boardURL = threadToBoard(fixedURL);
 
   const entry = {
     type,
     bbsType,
     url: fixedURL,
     title: title ? title : fixedURL,
+    boardUrl: boardURL,
     resCount: null,
     readState: null,
     expired: false
   };
 
-  const reg = /^\d+$/
+  const reg = /^\d+$/;
   if (reg.test(arg.get("res_count"))) {
     entry.resCount = +arg.get("res_count");
   }

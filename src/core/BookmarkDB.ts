@@ -13,7 +13,7 @@ const _openDB = (): Promise<IDBDatabase> => {
     req.onupgradeneeded = ({ target: {result: db, transaction: tx} }) => {
       objStore = db.createObjectStore("Bookmark", {keyPath: "url"})
       objStore.createIndex("title", "title", {unique: false});
-      objStore.createIndex("board_url", "board_url", {unique: false});
+      objStore.createIndex("boardUrl", "boardUrl", {unique: false});
       objStore.createIndex("type", "type", {unique: false});
       tx.oncomplete = () => {
         resolve(db);
@@ -91,7 +91,7 @@ export const applyServerMove = (from: string, to: string): Promise<void> => {
     const req = db
       .transaction("Bookmark", "read")
       .objectStore("Bookmark")
-      .index("board_url")
+      .index("boardUrl")
       .openCursor(IDBKeyRange.only(from));
     req.onsuccess = ({ target: {result: cursor} }) => {
       if (cursor) {
