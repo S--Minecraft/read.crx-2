@@ -25,7 +25,7 @@ const _openDB = (): Promise<IDBDatabase> => {
   });
 };
 
-export const add = async (entry: Entry): Promise<boolean> => {
+export const add = async (entry: Entry, withEvent: boolean = true): Promise<boolean> => {
   try {
     const db = await _openDB();
     const req = db
@@ -33,9 +33,11 @@ export const add = async (entry: Entry): Promise<boolean> => {
       .objectStore("Bookmark")
       .add(entry);
     await indexedDBRequestToPromise(req);
-    target.emit(new CustomEvent("ADD",
-      detail: entry
-    ));
+    if (withEvent) {
+      target.emit(new CustomEvent("ADD",
+        detail: entry
+      ));
+    }
     return true;
   } catch (e) {
     // TODO: すでにそのURLが存在のときエラー
@@ -44,7 +46,7 @@ export const add = async (entry: Entry): Promise<boolean> => {
   }
 };
 
-export const update = async (entry: Entry): Promise<boolean> => {
+export const update = async (entry: Entry, withEvent: boolean = true): Promise<boolean> => {
   try {
     const db = await _openDB();
     const req = db
@@ -52,9 +54,11 @@ export const update = async (entry: Entry): Promise<boolean> => {
       .objectStore("Bookmark")
       .put(entry);
     await indexedDBRequestToPromise(req);
-    target.emit(new CustomEvent("UPDATE",
-      detail: entry
-    ));
+    if (withEvent) {
+      target.emit(new CustomEvent("UPDATE",
+        detail: entry
+      ));
+    }
     return true;
   } catch (e) {
     app.log("error", "BookmarkDB.update: データの更新に失敗しました");
@@ -62,7 +66,7 @@ export const update = async (entry: Entry): Promise<boolean> => {
   }
 };
 
-export const remove = async (url: string): Promise<boolean> => {
+export const remove = async (url: string, withEvent: boolean = true): Promise<boolean> => {
   try {
     const entry = await get(url);
     const db = await _openDB();
@@ -70,9 +74,11 @@ export const remove = async (url: string): Promise<boolean> => {
       .transaction("Bookmark", "readwrite")
       .delete(url);
     await indexedDBRequestToPromise(req);
-    target.emit(new CustomEvent("REMOVE",
-      detail: entry
-    ));
+    if (withEvent) {
+      target.emit(new CustomEvent("REMOVE",
+        detail: entry
+      ));
+    }
     return true;
   } catch (e) {
     app.log("error", "BookmarkDB.remove: データの削除に失敗しました");
